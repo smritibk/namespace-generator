@@ -2,12 +2,10 @@ package com.nchl.namespacegenerator.key;
 
 import com.nchl.namespacegenerator.constant.NamespaceConstants;
 import com.nchl.namespacegenerator.exception.InvalidNamespaceException;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
 public class NamespaceValidator {
 
     private static final String DELIMITER = ":";

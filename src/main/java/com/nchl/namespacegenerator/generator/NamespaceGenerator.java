@@ -1,9 +1,8 @@
 package com.nchl.namespacegenerator.generator;
 
 import com.nchl.namespacegenerator.key.NamespaceBuilder;
-import org.springframework.stereotype.Component;
 
-@Component
+
 public class NamespaceGenerator {
     private final NamespaceBuilder builder;
 

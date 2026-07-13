@@ -15,7 +15,7 @@ public class NamespaceAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public Namespace namespaceModel(NamespaceProperties properties){
+    public Namespace namespace(NamespaceProperties properties){
         return new Namespace(
                 properties.environment(),
                 properties.application()

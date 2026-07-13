@@ -2,13 +2,12 @@ package com.nchl.namespacegenerator.key;
 
 import com.nchl.namespacegenerator.constant.NamespaceConstants;
 import com.nchl.namespacegenerator.domain.Namespace;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
 
-@Component
+
 public class NamespaceBuilder {
 
     private final Namespace namespace;
