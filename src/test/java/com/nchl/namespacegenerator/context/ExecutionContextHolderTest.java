@@ -6,24 +6,35 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-public class ExecutionContextHolderTest {
+class ExecutionContextHolderTest {
 
     @AfterEach
-    void cleanup(){
+    void cleanup() {
         ExecutionContextHolder.clear();
     }
 
     @Test
-    void shouldStoreExecutionSegments(){
+    void shouldStoreExecutionSegments() {
 
         ExecutionContextHolder.enter("auth");
         ExecutionContextHolder.enter("registration");
 
-        ExecutionContext context=ExecutionContextHolder.getContext();
+        ExecutionContext context = ExecutionContextHolder.getContext();
 
         Assertions.assertEquals(
                 List.of("auth", "registration"),
                 context.segments()
+        );
+    }
+
+    @Test
+    void shouldClearExecutionContext() {
+        ExecutionContextHolder.enter("auth");
+
+        ExecutionContextHolder.clear();
+
+        Assertions.assertTrue(
+                ExecutionContextHolder.getContext().segments().isEmpty()
         );
     }
 }
