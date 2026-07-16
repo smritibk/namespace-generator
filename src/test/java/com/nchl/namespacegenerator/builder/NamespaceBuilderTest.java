@@ -1,34 +1,47 @@
-package com.nchl.namespacegenerator.key;
+package com.nchl.namespacegenerator.builder;
 
 import com.nchl.namespacegenerator.constant.NamespaceConstants;
+import com.nchl.namespacegenerator.context.ExecutionContext;
 import com.nchl.namespacegenerator.domain.Namespace;
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.nchl.namespacegenerator.domain.NamespaceContext;
 import com.nchl.namespacegenerator.exception.InvalidNamespaceException;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 public class NamespaceBuilderTest {
 
-    private final Namespace namespace =
-            new Namespace("prod", "auth-service");
+    private final NamespaceContext context=
+            new NamespaceContext(
+                    new Namespace("prod", "bookverse"),
+                    new ExecutionContext(
+                            List.of("auth", "registration")
+                    ),
+                    List.of("user"),
+                    List.of("USR-1001")
+            );
 
     private final NamespaceValidator validator =
             new NamespaceValidator();
 
     private final NamespaceBuilder builder =
-            new NamespaceBuilder(namespace, validator);
+            new NamespaceBuilder(validator);
 
     String expected=String.join(
             NamespaceConstants.SEPARATOR,
             "prod",
-            "auth-service",
-            "otp",
-            "1001"
+            "bookverse",
+            "auth",
+            "registration",
+            "user",
+            "USR-1001"
     );
 
     @Test
     void shouldBuildNamespace(){
-        String key = builder.build("otp", "1001");
+        String key = builder.build(context);
 
         assertEquals(
                 expected,
@@ -38,7 +51,7 @@ public class NamespaceBuilderTest {
 
     @Test
     void shouldIgnoreBlankSegments(){
-        String key = builder.build("otp", "", "1001");
+        String key = builder.build(context);
 
         assertEquals(
                 expected,
@@ -51,7 +64,7 @@ public class NamespaceBuilderTest {
 
         assertThrows(
                 InvalidNamespaceException.class,
-                ()->builder.build("otp", "user:1001")
+                ()->builder.build(context)
         );
     }
 
@@ -60,7 +73,7 @@ public class NamespaceBuilderTest {
 
         assertThrows(
                 InvalidNamespaceException.class,
-                ()->builder.build("", null, " ")
+                ()->builder.build(context)
         );
     }
 }

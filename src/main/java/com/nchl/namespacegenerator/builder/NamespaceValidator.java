@@ -1,4 +1,4 @@
-package com.nchl.namespacegenerator.key;
+package com.nchl.namespacegenerator.builder;
 
 import com.nchl.namespacegenerator.constant.NamespaceConstants;
 import com.nchl.namespacegenerator.exception.InvalidNamespaceException;
@@ -8,9 +8,7 @@ import java.util.List;
 
 public class NamespaceValidator {
 
-    private static final String DELIMITER = ":";
-
-    public List<String> validate(String... segments){
+    public List<String> validate(List<String> segments){
 
         List<String> cleanedSegments = new ArrayList<>();
 
@@ -36,7 +34,7 @@ public class NamespaceValidator {
                     "Namespace key must contain at least one valid segment."
             );
         }
-        return cleanedSegments;
+        return List.copyOf(cleanedSegments);
     }
 
     private void validateSegment(String segment){

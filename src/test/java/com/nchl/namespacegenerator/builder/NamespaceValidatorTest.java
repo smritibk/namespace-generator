@@ -1,4 +1,4 @@
-package com.nchl.namespacegenerator.key;
+package com.nchl.namespacegenerator.builder;
 
 
 import com.nchl.namespacegenerator.exception.InvalidNamespaceException;

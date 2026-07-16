@@ -1,9 +1,15 @@
 package com.nchl.namespacegenerator.configuration;
 
+import com.nchl.namespacegenerator.context.ContextResolver;
+import com.nchl.namespacegenerator.context.DefaultContextResolver;
 import com.nchl.namespacegenerator.domain.Namespace;
 import com.nchl.namespacegenerator.generator.NamespaceGenerator;
-import com.nchl.namespacegenerator.key.NamespaceBuilder;
-import com.nchl.namespacegenerator.key.NamespaceValidator;
+import com.nchl.namespacegenerator.builder.NamespaceBuilder;
+import com.nchl.namespacegenerator.builder.NamespaceValidator;
+import com.nchl.namespacegenerator.identity.IdentityResolver;
+import com.nchl.namespacegenerator.identity.ReflectionIdentityResolver;
+import com.nchl.namespacegenerator.metadata.MetadataResolver;
+import com.nchl.namespacegenerator.metadata.ReflectionMetadataResolver;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -30,14 +36,44 @@ public class NamespaceAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public NamespaceBuilder namespaceBuilder(Namespace namespace, NamespaceValidator namespaceValidator){
-        return new NamespaceBuilder(namespace, namespaceValidator);
+    public NamespaceBuilder namespaceBuilder(NamespaceValidator namespaceValidator){
+        return new NamespaceBuilder(namespaceValidator);
 
     }
 
     @Bean
     @ConditionalOnMissingBean
-    public NamespaceGenerator namespaceGenerator(NamespaceBuilder namespaceBuilder){
-        return new NamespaceGenerator(namespaceBuilder);
+    public ContextResolver contextResolver(){
+        return new DefaultContextResolver();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public MetadataResolver metadataResolver(){
+        return new ReflectionMetadataResolver();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public IdentityResolver identityResolver(){
+        return new ReflectionIdentityResolver();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public NamespaceGenerator namespaceGenerator(
+            Namespace namespace,
+            ContextResolver contextResolver,
+            MetadataResolver metadataResolver,
+            IdentityResolver identityResolver,
+            NamespaceBuilder namespaceBuilder){
+
+        return new NamespaceGenerator(
+                namespace,
+                contextResolver,
+                metadataResolver,
+                identityResolver,
+                namespaceBuilder
+        );
     }
 }
