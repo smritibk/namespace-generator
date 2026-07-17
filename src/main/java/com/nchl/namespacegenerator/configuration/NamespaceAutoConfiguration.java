@@ -1,5 +1,6 @@
 package com.nchl.namespacegenerator.configuration;
 
+import com.nchl.namespacegenerator.aspect.NamespaceContextAspect;
 import com.nchl.namespacegenerator.context.ContextResolver;
 import com.nchl.namespacegenerator.context.DefaultContextResolver;
 import com.nchl.namespacegenerator.domain.Namespace;
@@ -18,8 +19,10 @@ import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 @AutoConfiguration
+@EnableAspectJAutoProxy
 @EnableConfigurationProperties(NamespaceProperties.class)
 public class NamespaceAutoConfiguration {
 
@@ -95,5 +98,11 @@ public class NamespaceAutoConfiguration {
                 identityResolver,
                 namespaceBuilder
         );
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public NamespaceContextAspect namespaceContextAspect(){
+        return new NamespaceContextAspect();
     }
 }

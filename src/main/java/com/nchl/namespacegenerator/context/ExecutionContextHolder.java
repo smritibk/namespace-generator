@@ -13,9 +13,21 @@ public final class ExecutionContextHolder {
         CONTEXT.get().push(segment);
     }
 
-    public static Scope enter(String segment){
-        push(segment);
-        return new Scope();
+    public static Scope enter(String... segments) {
+
+        int depth = 0;
+
+        for (String segment: segments){
+
+            if (segment==null||segment.isBlank()){
+                continue;
+            }
+
+            push(segment);
+            depth++;
+        }
+
+        return new Scope(depth);
     }
 
     private static void pop(){
@@ -32,13 +44,22 @@ public final class ExecutionContextHolder {
 
     public static final class Scope implements AutoCloseable{
 
+        private final int depth;
+
+        Scope(int depth){
+            this.depth=depth;
+        }
+
         @Override
         public void close() throws Exception {
-            pop();
+
+            for (int i=0; i<depth; i++){
+                pop();
+            }
         }
     }
 
-    public static ExecutionContext getContext(){
+    public static ExecutionContext current(){
         Deque<String> stack= CONTEXT.get();
 
         List<String> segments = new ArrayList<>(stack);

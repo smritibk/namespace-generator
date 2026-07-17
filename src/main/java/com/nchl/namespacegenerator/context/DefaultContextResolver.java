@@ -4,6 +4,6 @@ public class DefaultContextResolver implements ContextResolver{
 
     @Override
     public ExecutionContext resolve() {
-        return ExecutionContextHolder.getContext();
+        return ExecutionContextHolder.current();
     }
 }

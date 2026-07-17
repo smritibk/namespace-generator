@@ -66,6 +66,10 @@ public class NamespaceGenerator {
     public String generate(Object payload) {
         ExecutionContext executionContext = contextResolver.resolve();
 
+//        if (executionContext.isEmpty()){
+//            throw new IllegalStateException("No execution context is active");
+//        }
+
         List<String> resourceSegments =
                 metadataResolver.resolve(payload);
 

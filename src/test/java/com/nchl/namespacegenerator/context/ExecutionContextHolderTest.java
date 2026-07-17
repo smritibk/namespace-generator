@@ -19,11 +19,11 @@ class ExecutionContextHolderTest {
         ExecutionContextHolder.enter("auth");
         ExecutionContextHolder.enter("registration");
 
-        ExecutionContext context = ExecutionContextHolder.getContext();
+        ExecutionContext context = ExecutionContextHolder.current();
 
         Assertions.assertEquals(
                 List.of("auth", "registration"),
-                context.segments()
+                context.contextSegments()
         );
     }
 
@@ -34,7 +34,7 @@ class ExecutionContextHolderTest {
         ExecutionContextHolder.clear();
 
         Assertions.assertTrue(
-                ExecutionContextHolder.getContext().segments().isEmpty()
+                ExecutionContextHolder.current().contextSegments().isEmpty()
         );
     }
 }

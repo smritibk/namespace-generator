@@ -21,24 +21,16 @@ public class NamespaceBuilder {
 
     public String build(NamespaceContext context) {
 
-        List<String> segments = new ArrayList<>();
-
-        segments.add(context.namespace().environment());
-        segments.add(context.namespace().application());
-
-        segments.addAll(context.executionContext().segments());
-        segments.addAll(context.resourceSegments());
-        segments.addAll(context.identitySegments());
-
-        List<String> validateSegments = validator.validate(segments);
-
-//        List<String> keySegments = new ArrayList<>(namespace.segments());
+//        List<String> segments = new ArrayList<>();
 //
-//        keySegments.addAll(validateSegments);
+//        segments.add(context.namespace().environment());
+//        segments.add(context.namespace().application());
 //
-//        StringJoiner joiner = new StringJoiner(NamespaceConstants.SEPARATOR);
-//
-//        keySegments.forEach(joiner::add);
+//        segments.addAll(context.executionContext().segments());
+//        segments.addAll(context.resourceSegments());
+//        segments.addAll(context.identitySegments());
+
+        List<String> validateSegments = validator.validate(context.namespaceSegments());
 
         return String.join(
                 NamespaceConstants.SEPARATOR,
