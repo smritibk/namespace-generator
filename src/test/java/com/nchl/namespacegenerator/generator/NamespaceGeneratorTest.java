@@ -5,10 +5,15 @@ import com.nchl.namespacegenerator.builder.NamespaceValidator;
 import com.nchl.namespacegenerator.context.DefaultContextResolver;
 import com.nchl.namespacegenerator.context.ExecutionContextHolder;
 import com.nchl.namespacegenerator.domain.Namespace;
+import com.nchl.namespacegenerator.identity.DefaultIdentityNamingStrategy;
+import com.nchl.namespacegenerator.identity.IdentityNamingStrategy;
 import com.nchl.namespacegenerator.identity.ReflectionIdentityResolver;
+import com.nchl.namespacegenerator.metadata.DefaultMetadataNamingStrategy;
+import com.nchl.namespacegenerator.metadata.MetadataNamingStrategy;
 import com.nchl.namespacegenerator.metadata.ReflectionMetadataResolver;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class NamespaceGeneratorTest {
@@ -17,6 +22,15 @@ class NamespaceGeneratorTest {
             String email,
             String password
     ){}
+
+    MetadataNamingStrategy metadataNamingStrategy;
+    IdentityNamingStrategy identityNamingStrategy;
+
+    @BeforeEach
+    void setup(){
+        metadataNamingStrategy=new DefaultMetadataNamingStrategy();
+        identityNamingStrategy=new DefaultIdentityNamingStrategy();
+    }
 
     @AfterEach
     void cleanup(){
@@ -33,8 +47,8 @@ class NamespaceGeneratorTest {
                                 "bookverse"
                         ),
                         new DefaultContextResolver(),
-                        new ReflectionMetadataResolver(),
-                        new ReflectionIdentityResolver(),
+                        new ReflectionMetadataResolver(metadataNamingStrategy),
+                        new ReflectionIdentityResolver(identityNamingStrategy),
                         new NamespaceBuilder(
                                 new NamespaceValidator()
                         )

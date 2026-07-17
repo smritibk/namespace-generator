@@ -8,6 +8,18 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 /**
  * Declares the resources segments that should appear
  * in the generated namespace.
+ *
+ * <p>When present, the framework uses the supplied values instead of
+ * deriving resource names from the class name.</p>
+ *
+ * <pre>
+ *     {@code
+ *     @NamespaceResource({"user","registration"})
+ *     public record RegisterRequest(...){}
+ *     }
+ * </pre>
+ *
+ * @since 1.0.0
  */
 
 @Documented

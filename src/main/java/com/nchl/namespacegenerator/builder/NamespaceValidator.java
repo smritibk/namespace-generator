@@ -31,7 +31,7 @@ public class NamespaceValidator {
 
         if (cleanedSegments.isEmpty()){
             throw new InvalidNamespaceException(
-                    "Namespace key must contain at least one valid segment."
+                    "No namespace identity could be resolved. Annotate one or more fields with @NamespaceId or provide matching IdentityNamingStrategy."
             );
         }
         return List.copyOf(cleanedSegments);

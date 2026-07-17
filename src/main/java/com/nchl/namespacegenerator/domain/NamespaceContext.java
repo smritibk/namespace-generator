@@ -14,4 +14,5 @@ public record NamespaceContext(
         resourceSegments = List.copyOf(resourceSegments);
         identitySegments = List.copyOf(identitySegments);
     }
+
 }

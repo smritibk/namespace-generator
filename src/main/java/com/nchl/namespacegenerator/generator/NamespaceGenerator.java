@@ -10,6 +10,28 @@ import com.nchl.namespacegenerator.metadata.MetadataResolver;
 
 import java.util.List;
 
+/**
+ * Generates a namespace from the current execution context,
+ * payload metadata, and identity information.
+ *
+ * <p> The generated namespace follows the structure:<p/>
+ *
+ * <pre>
+ *     environment:application:context...:resource..:identity...
+ * </pre>
+ *
+ * <p>Metadata and identity are resolved through the configured
+ * {@link com.nchl.namespacegenerator.metadata.MetadataResolver}
+ * and
+ * {@link com.nchl.namespacegenerator.identity.IdentityResolver}
+ * implementations.</p>
+ *
+ * <p>This class is the primary entry point of the library</p>
+ *
+ * @author smritibk
+ * @since 1.0.0
+ */
+
 
 public class NamespaceGenerator {
     private final ContextResolver contextResolver;
@@ -24,12 +46,22 @@ public class NamespaceGenerator {
             MetadataResolver metadataResolver,
             IdentityResolver identityResolver,
             NamespaceBuilder builder) {
-        this.namespace=namespace;
+        this.namespace = namespace;
         this.contextResolver = contextResolver;
         this.metadataResolver = metadataResolver;
         this.identityResolver = identityResolver;
         this.builder = builder;
     }
+
+    /**
+     * Generated a namespace for the supplied payload
+     *
+     * @param payload the object whose metadata and identity will be
+     *                used to generate the namespace
+     * @return a validated namespace string
+     * @throws com.nchl.namespacegenerator.exception.InvalidNamespaceException if the generated namespace
+     *                                                                         is invalid or no identity can be resolved
+     */
 
     public String generate(Object payload) {
         ExecutionContext executionContext = contextResolver.resolve();
@@ -40,7 +72,7 @@ public class NamespaceGenerator {
         List<String> identitySegments =
                 identityResolver.resolve(payload);
 
-        NamespaceContext context=
+        NamespaceContext context =
                 new NamespaceContext(
                         namespace,
                         executionContext,
