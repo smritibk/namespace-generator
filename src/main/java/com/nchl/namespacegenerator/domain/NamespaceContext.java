@@ -8,11 +8,11 @@ import java.util.List;
 public record NamespaceContext(
         Namespace namespace,
         ExecutionContext executionContext,
-        List<String> resourceSegments,
+//        List<String> resourceSegments,
         List<String> identitySegments
 ) {
     public NamespaceContext {
-        resourceSegments = List.copyOf(resourceSegments);
+//        resourceSegments = List.copyOf(resourceSegments);
         identitySegments = List.copyOf(identitySegments);
     }
 
@@ -23,7 +23,7 @@ public record NamespaceContext(
         segments.add(namespace.application());
 
         segments.addAll(executionContext.contextSegments());
-        segments.addAll(resourceSegments);
+//        segments.addAll(resourceSegments);
         segments.addAll(identitySegments);
 
         return List.copyOf(segments);

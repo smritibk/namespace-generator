@@ -11,10 +11,10 @@ import com.nchl.namespacegenerator.identity.DefaultIdentityNamingStrategy;
 import com.nchl.namespacegenerator.identity.IdentityNamingStrategy;
 import com.nchl.namespacegenerator.identity.IdentityResolver;
 import com.nchl.namespacegenerator.identity.ReflectionIdentityResolver;
-import com.nchl.namespacegenerator.metadata.DefaultMetadataNamingStrategy;
-import com.nchl.namespacegenerator.metadata.MetadataNamingStrategy;
-import com.nchl.namespacegenerator.metadata.MetadataResolver;
-import com.nchl.namespacegenerator.metadata.ReflectionMetadataResolver;
+//import com.nchl.namespacegenerator.metadata.DefaultMetadataNamingStrategy;
+//import com.nchl.namespacegenerator.metadata.MetadataNamingStrategy;
+//import com.nchl.namespacegenerator.metadata.MetadataResolver;
+//import com.nchl.namespacegenerator.metadata.ReflectionMetadataResolver;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -54,19 +54,19 @@ public class NamespaceAutoConfiguration {
         return new DefaultContextResolver();
     }
 
-    @Bean
-    @ConditionalOnMissingBean
-    public MetadataNamingStrategy metadataNamingStrategy() {
-        return new DefaultMetadataNamingStrategy();
-    }
-
-    @Bean
-    @ConditionalOnMissingBean
-    public MetadataResolver metadataResolver(
-            MetadataNamingStrategy strategy
-    ) {
-        return new ReflectionMetadataResolver(strategy);
-    }
+//    @Bean
+//    @ConditionalOnMissingBean
+//    public MetadataNamingStrategy metadataNamingStrategy() {
+//        return new DefaultMetadataNamingStrategy();
+//    }
+//
+//    @Bean
+//    @ConditionalOnMissingBean
+//    public MetadataResolver metadataResolver(
+//            MetadataNamingStrategy strategy
+//    ) {
+//        return new ReflectionMetadataResolver(strategy);
+//    }
 
     @Bean
     @ConditionalOnMissingBean
@@ -87,14 +87,14 @@ public class NamespaceAutoConfiguration {
     public NamespaceGenerator namespaceGenerator(
             Namespace namespace,
             ContextResolver contextResolver,
-            MetadataResolver metadataResolver,
+//            MetadataResolver metadataResolver,
             IdentityResolver identityResolver,
             NamespaceBuilder namespaceBuilder) {
 
         return new NamespaceGenerator(
                 namespace,
                 contextResolver,
-                metadataResolver,
+//                metadataResolver,
                 identityResolver,
                 namespaceBuilder
         );

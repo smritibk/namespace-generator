@@ -6,7 +6,7 @@ import com.nchl.namespacegenerator.context.ExecutionContext;
 import com.nchl.namespacegenerator.domain.Namespace;
 import com.nchl.namespacegenerator.domain.NamespaceContext;
 import com.nchl.namespacegenerator.identity.IdentityResolver;
-import com.nchl.namespacegenerator.metadata.MetadataResolver;
+//import com.nchl.namespacegenerator.metadata.MetadataResolver;
 
 import java.util.List;
 
@@ -21,7 +21,7 @@ import java.util.List;
  * </pre>
  *
  * <p>Metadata and identity are resolved through the configured
- * {@link com.nchl.namespacegenerator.metadata.MetadataResolver}
+
  * and
  * {@link com.nchl.namespacegenerator.identity.IdentityResolver}
  * implementations.</p>
@@ -35,7 +35,7 @@ import java.util.List;
 
 public class NamespaceGenerator {
     private final ContextResolver contextResolver;
-    private final MetadataResolver metadataResolver;
+//    private final MetadataResolver metadataResolver;
     private final IdentityResolver identityResolver;
     private final NamespaceBuilder builder;
     private final Namespace namespace;
@@ -43,12 +43,12 @@ public class NamespaceGenerator {
     public NamespaceGenerator(
             Namespace namespace,
             ContextResolver contextResolver,
-            MetadataResolver metadataResolver,
+//            MetadataResolver metadataResolver,
             IdentityResolver identityResolver,
             NamespaceBuilder builder) {
         this.namespace = namespace;
         this.contextResolver = contextResolver;
-        this.metadataResolver = metadataResolver;
+//        this.metadataResolver = metadataResolver;
         this.identityResolver = identityResolver;
         this.builder = builder;
     }
@@ -70,17 +70,21 @@ public class NamespaceGenerator {
 //            throw new IllegalStateException("No execution context is active");
 //        }
 
-        List<String> resourceSegments =
-                metadataResolver.resolve(payload);
+//        List<String> resourceSegments =
+//                metadataResolver.resolve(payload);
+
+//        throw new RuntimeException("THIS IS NEW JAR");
 
         List<String> identitySegments =
                 identityResolver.resolve(payload);
+
+        System.out.println("Metadata Resolver");
 
         NamespaceContext context =
                 new NamespaceContext(
                         namespace,
                         executionContext,
-                        resourceSegments,
+//                        resourceSegments,
                         identitySegments
                 );
 
