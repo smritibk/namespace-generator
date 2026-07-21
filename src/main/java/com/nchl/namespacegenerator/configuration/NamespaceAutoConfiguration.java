@@ -1,39 +1,24 @@
 package com.nchl.namespacegenerator.configuration;
 
 import com.nchl.namespacegenerator.aspect.NamespaceContextAspect;
-import com.nchl.namespacegenerator.context.ContextResolver;
-import com.nchl.namespacegenerator.context.DefaultContextResolver;
-import com.nchl.namespacegenerator.domain.Namespace;
-import com.nchl.namespacegenerator.generator.NamespaceGenerator;
 import com.nchl.namespacegenerator.builder.NamespaceBuilder;
 import com.nchl.namespacegenerator.builder.NamespaceValidator;
-import com.nchl.namespacegenerator.identity.DefaultIdentityNamingStrategy;
-import com.nchl.namespacegenerator.identity.IdentityNamingStrategy;
-import com.nchl.namespacegenerator.identity.IdentityResolver;
-import com.nchl.namespacegenerator.identity.ReflectionIdentityResolver;
-//import com.nchl.namespacegenerator.metadata.DefaultMetadataNamingStrategy;
-//import com.nchl.namespacegenerator.metadata.MetadataNamingStrategy;
-//import com.nchl.namespacegenerator.metadata.MetadataResolver;
-//import com.nchl.namespacegenerator.metadata.ReflectionMetadataResolver;
+import com.nchl.namespacegenerator.context.ContextResolver;
+import com.nchl.namespacegenerator.context.DefaultContextResolver;
+import com.nchl.namespacegenerator.generator.NamespaceGenerator;
+import com.nchl.namespacegenerator.prefix.DefaultPrefixResolver;
+import com.nchl.namespacegenerator.prefix.PrefixResolver;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
+
 @AutoConfiguration
 @EnableAspectJAutoProxy
 @EnableConfigurationProperties(NamespaceProperties.class)
 public class NamespaceAutoConfiguration {
-
-    @Bean
-    @ConditionalOnMissingBean
-    public Namespace namespace(NamespaceProperties properties) {
-        return new Namespace(
-                properties.environment(),
-                properties.application()
-        );
-    }
 
     @Bean
     @ConditionalOnMissingBean
@@ -54,48 +39,22 @@ public class NamespaceAutoConfiguration {
         return new DefaultContextResolver();
     }
 
-//    @Bean
-//    @ConditionalOnMissingBean
-//    public MetadataNamingStrategy metadataNamingStrategy() {
-//        return new DefaultMetadataNamingStrategy();
-//    }
-//
-//    @Bean
-//    @ConditionalOnMissingBean
-//    public MetadataResolver metadataResolver(
-//            MetadataNamingStrategy strategy
-//    ) {
-//        return new ReflectionMetadataResolver(strategy);
-//    }
-
     @Bean
     @ConditionalOnMissingBean
-    public IdentityNamingStrategy identityNamingStrategy() {
-        return new DefaultIdentityNamingStrategy();
-    }
-
-    @Bean
-    @ConditionalOnMissingBean
-    public IdentityResolver identityResolver(
-            IdentityNamingStrategy strategy
-    ) {
-        return new ReflectionIdentityResolver(strategy);
+    public PrefixResolver prefixResolver(NamespaceProperties properties) {
+        return new DefaultPrefixResolver(properties);
     }
 
     @Bean
     @ConditionalOnMissingBean
     public NamespaceGenerator namespaceGenerator(
-            Namespace namespace,
+            PrefixResolver prefixResolver,
             ContextResolver contextResolver,
-//            MetadataResolver metadataResolver,
-            IdentityResolver identityResolver,
             NamespaceBuilder namespaceBuilder) {
 
         return new NamespaceGenerator(
-                namespace,
+                prefixResolver,
                 contextResolver,
-//                metadataResolver,
-                identityResolver,
                 namespaceBuilder
         );
     }

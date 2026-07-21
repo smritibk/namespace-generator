@@ -2,6 +2,9 @@ package com.nchl.namespacegenerator.configuration;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Configuration properties used to define the namespace prefix.
  *
@@ -13,14 +16,45 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  *      application: e-commerce
  * </pre>
  *
- * @param environment the deployment environment
- * @param application the application name
+
  *
  * @since 1.0.0
  */
 
 @ConfigurationProperties(prefix = "namespace")
-public record NamespaceProperties(
-         String environment,
-         String application
-) {}
+public class NamespaceProperties {
+
+    private String environment;
+    private String application;
+
+    public String getEnvironment() {
+        return environment;
+    }
+
+    public String getApplication() {
+        return application;
+    }
+
+    public void setEnvironment(String environment) {
+        this.environment = environment;
+    }
+
+    public void setApplication(String application) {
+        this.application = application;
+    }
+
+    public List<String> segments() {
+
+        List<String> segments = new ArrayList<>();
+
+        if (environment != null && !environment.isBlank()) {
+            segments.add(environment);
+        }
+
+        if (application != null && !application.isBlank()) {
+            segments.add(application);
+        }
+
+        return List.copyOf(segments);
+    }
+}

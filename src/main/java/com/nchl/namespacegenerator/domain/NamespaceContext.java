@@ -6,24 +6,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public record NamespaceContext(
-        Namespace namespace,
+        List<String> namespacePrefix,
         ExecutionContext executionContext,
-//        List<String> resourceSegments,
         List<String> identitySegments
 ) {
     public NamespaceContext {
-//        resourceSegments = List.copyOf(resourceSegments);
+        namespacePrefix=List.copyOf(namespacePrefix);
         identitySegments = List.copyOf(identitySegments);
     }
 
-    public List<String> namespaceSegments(){
+    public List<String> namespaceSegments() {
         List<String> segments = new ArrayList<>();
 
-        segments.add(namespace.environment());
-        segments.add(namespace.application());
-
+        segments.addAll(namespacePrefix);
         segments.addAll(executionContext.contextSegments());
-//        segments.addAll(resourceSegments);
         segments.addAll(identitySegments);
 
         return List.copyOf(segments);
