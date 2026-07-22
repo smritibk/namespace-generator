@@ -3,7 +3,9 @@ package com.nchl.namespacegenerator.configuration;
 import com.nchl.namespacegenerator.aspect.NamespaceContextAspect;
 import com.nchl.namespacegenerator.builder.NamespaceBuilder;
 import com.nchl.namespacegenerator.builder.NamespaceValidator;
+import com.nchl.namespacegenerator.context.ContextAppender;
 import com.nchl.namespacegenerator.context.ContextResolver;
+import com.nchl.namespacegenerator.context.DefaultContextAppender;
 import com.nchl.namespacegenerator.context.DefaultContextResolver;
 import com.nchl.namespacegenerator.generator.NamespaceGenerator;
 import com.nchl.namespacegenerator.prefix.DefaultPrefixResolver;
@@ -37,6 +39,12 @@ public class NamespaceAutoConfiguration {
     @ConditionalOnMissingBean
     public ContextResolver contextResolver() {
         return new DefaultContextResolver();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public ContextAppender contextAppender(){
+        return new DefaultContextAppender();
     }
 
     @Bean

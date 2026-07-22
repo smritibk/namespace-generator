@@ -7,12 +7,12 @@ import java.util.List;
 
 public record NamespaceContext(
         List<String> namespacePrefix,
-        ExecutionContext executionContext,
-        List<String> identitySegments
+        ExecutionContext executionContext
+//        List<String> identitySegments
 ) {
     public NamespaceContext {
         namespacePrefix=List.copyOf(namespacePrefix);
-        identitySegments = List.copyOf(identitySegments);
+//        identitySegments = List.copyOf(identitySegments);
     }
 
     public List<String> namespaceSegments() {
@@ -20,7 +20,7 @@ public record NamespaceContext(
 
         segments.addAll(namespacePrefix);
         segments.addAll(executionContext.contextSegments());
-        segments.addAll(identitySegments);
+//        segments.addAll(identitySegments);
 
         return List.copyOf(segments);
     }

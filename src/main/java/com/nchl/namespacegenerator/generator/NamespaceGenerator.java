@@ -57,19 +57,23 @@ public class NamespaceGenerator {
      *                                                                         is invalid or no identity can be resolved
      */
 
-    public String generate(String... identifier) {
+    public String generate(
+//            String... identifier
+    ) {
         ExecutionContext executionContext = contextResolver.resolve();
 
-        List<String> identifierSegments =
-                identifier == null
-                        ? List.of()
-                        : Arrays.asList(identifier);
+//        List<String> identifierSegments =
+//                identifier == null
+//                        ? List.of()
+//                        : Arrays.asList(identifier);
+
+//        System.out.println("Generator called");
 
         NamespaceContext context =
                 new NamespaceContext(
                         prefixResolver.resolve(),
-                        executionContext,
-                        identifierSegments
+                        executionContext
+//                        identifierSegments
                 );
 
         return builder.build(context);

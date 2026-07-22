@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
 public class DefaultPrefixResolver implements PrefixResolver{
 
     private final NamespaceProperties namespaceProperties;

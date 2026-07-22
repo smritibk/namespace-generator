@@ -6,6 +6,8 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 
+import java.util.Arrays;
+
 @Aspect
 public class NamespaceContextAspect {
 
@@ -17,6 +19,7 @@ public class NamespaceContextAspect {
         try (ExecutionContextHolder.Scope ignored =
                      ExecutionContextHolder.enter(namespaceContext.value())
         ) {
+            System.out.println(Arrays.toString(namespaceContext.value()));
             return joinPoint.proceed();
         }
     }
